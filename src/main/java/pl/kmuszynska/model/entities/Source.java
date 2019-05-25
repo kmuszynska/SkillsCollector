@@ -1,7 +1,6 @@
 package pl.kmuszynska.model.entities;
 
 
-
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
@@ -10,17 +9,17 @@ import java.util.Set;
 @Table(name = "sources")
 public class Source {
     @Id
-    @GeneratedValue (strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true, nullable = false)
     private String name;
-    @Column (nullable = false)
+    @Column(nullable = false)
     private String description;
 
     @ManyToMany
-    @JoinTable (name = "sources_attached_skills",
-    joinColumns = @JoinColumn(name = "source_id"),
-    inverseJoinColumns = @JoinColumn(name = "skill_id"))
+    @JoinTable(name = "sources_attached_skills",
+            joinColumns = @JoinColumn(name = "source_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id"))
 
     private Set<Skill> attachedSkills;
 

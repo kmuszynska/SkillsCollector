@@ -27,6 +27,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "source_id"))
 
+
     private Set<Source> knownSources;
 
     public Long getId() {

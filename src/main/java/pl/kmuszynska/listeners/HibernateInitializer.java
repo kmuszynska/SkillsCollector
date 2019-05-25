@@ -54,7 +54,7 @@ public class HibernateInitializer implements ServletContextListener {
                     .applySettings(configuration.getProperties()).build();
             SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 
-            sce.getServletContext().setAttribute("session_factory",sessionFactory);
+            sce.getServletContext().setAttribute("session_factory", sessionFactory);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Błąd konfiguracji Hibernate!", e);
         }

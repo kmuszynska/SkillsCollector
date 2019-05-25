@@ -4,13 +4,13 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table (name = "skills")
+@Table(name = "skills")
 public class Skill {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column (unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String name;
 
     public Long getId() {
