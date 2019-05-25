@@ -4,6 +4,7 @@ package pl.kmuszynska.model.entities;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "sources")
@@ -15,6 +16,13 @@ public class Source {
     private String name;
     @Column (nullable = false)
     private String description;
+
+    @ManyToMany
+    @JoinTable (name = "sources_attached_skills",
+    joinColumns = @JoinColumn(name = "source_id"),
+    inverseJoinColumns = @JoinColumn(name = "skill_id"))
+
+    private Set<Skill> attachedSkills;
 
     public Long getId() {
         return id;
@@ -40,19 +48,26 @@ public class Source {
         this.description = description;
     }
 
+    public Set<Skill> getAttachedSkills() {
+        return attachedSkills;
+    }
+
+    public void setAttachedSkills(Set<Skill> attachedSkills) {
+        this.attachedSkills = attachedSkills;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Source source = (Source) o;
         return Objects.equals(id, source.id) &&
-                Objects.equals(name, source.name) &&
-                Objects.equals(description, source.description);
+                Objects.equals(name, source.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description);
+        return Objects.hash(id, name);
     }
 
     @Override

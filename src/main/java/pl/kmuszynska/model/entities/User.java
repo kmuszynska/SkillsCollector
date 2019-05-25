@@ -3,21 +3,31 @@ package pl.kmuszynska.model.entities;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class User {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @Column(name = "first_name")
     private String firstName;
-    @Column(nullable = false)
+    @Column(name = "last_name")
     private String lastName;
     @Column(unique = true, nullable = false)
-    private String userName;
+    private String username;
     @Column(nullable = false)
     private String password;
+
+    @ManyToMany
+    @JoinTable(name = "users_known_sources",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "source_id"))
+
+    private Set<Source> knownSources;
 
     public Long getId() {
         return id;
@@ -43,12 +53,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -59,21 +69,26 @@ public class User {
         this.password = password;
     }
 
+    public Set<Source> getKnownSources() {
+        return knownSources;
+    }
+
+    public void setKnownSources(Set<Source> knownSources) {
+        this.knownSources = knownSources;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return Objects.equals(id, user.id) &&
-                Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName) &&
-                Objects.equals(userName, user.userName) &&
-                Objects.equals(password, user.password);
+                Objects.equals(username, user.username);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, userName, password);
+        return Objects.hash(id, username);
     }
 
     @Override
@@ -82,7 +97,7 @@ public class User {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", userName='" + userName + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
